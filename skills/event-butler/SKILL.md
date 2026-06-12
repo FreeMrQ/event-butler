@@ -1,0 +1,51 @@
+---
+name: event-butler
+description: "飞书活动大管家：一条命令在飞书群聊中拥有全自动活动策划团队（主题确认→设计图→报名采集→作品初审→方案策划→协调汇总）"
+version: 1.0.0
+metadata:
+  requires:
+    bins: ["node", "lark-cli"]
+  dependencies:
+    skills:
+      - jimliu/baoyu-skills@baoyu-diagram
+      - jimliu/baoyu-skills@baoyu-cover-image
+      - jimliu/baoyu-skills@baoyu-format-markdown
+      - jimliu/baoyu-skills@baoyu-image-gen
+      - jimliu/baoyu-skills@baoyu-infographic
+      - obra/superpowers@brainstorming
+      - obra/superpowers@writing-plans
+---
+
+# 🎉 飞书活动大管家
+
+在飞书群聊中说一句话，7 个 AI Agent 自动协作完成整个活动策划。
+
+## 安装
+
+```bash
+npx skills add ronds/event-butler -g -y
+```
+
+> 把 `ronds` 换成你的 GitHub 用户名
+
+## 使用
+
+1. 把飞书机器人拉进群
+2. 在群里 @机器人：
+```
+@大管家 帮我策划一个 30 人的 AI 代码分享赛
+```
+3. 大管家会自动：主题确认 → 设计流程图 → 创建报名表 → 作品初审 → 输出方案 → 生成海报
+
+## 环境依赖
+
+需要先安装一次性依赖：
+- Node.js ≥ 18
+- lark-cli: `npm install -g @larksuite/cli`
+- 飞书应用配置: `lark-cli config init`
+
+## 安装自检
+
+```bash
+event-butler check   # 检查所有依赖是否就绪
+```
