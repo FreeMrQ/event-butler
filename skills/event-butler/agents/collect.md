@@ -87,10 +87,47 @@
 2. 表单描述中注明截止时间和活动要点
 3. 生成表单分享链接
 
+### ⚠️ 前置：确认 bot 在目标群中（不可跳过）
+
+**发送任何消息前，必须先确认 bot 已在目标群中！**
+
+1. 询问用户目标群聊名称（如用户未指定）
+2. 搜索群聊：
+   ```
+   lark-cli im +chat-search --query "群名" --as user
+   ```
+3. 检查 bot 是否已在群中：
+   ```
+   lark-cli im chat.members get --chat-id <chat_id> --as bot --page-all
+   ```
+4. **如果 bot 不在群中 → 停止，提示用户手动添加：**
+   ```
+   ⚠️ 机器人尚未加入「XXX」群。
+   
+   请手动操作：
+   1. 打开「XXX」群 → 群设置 → 群成员
+   2. 添加成员 → 搜索 Hermes 机器人 → 加入
+   3. 加好后告诉我，我立刻发送报名通知
+   ```
+5. bot 确认在群中后，继续下一步
+
+> 💡 **原因：** 飞书 bot 无法自己加入群聊，必须由群主/管理员或群成员手动拉入。这是飞书平台限制，不是 bug。
+
 ### 第四步：发送报名通知
-将表单链接发送到指定群聊：
+
+bot 确认在目标群中后，发送报名通知：
 - @所有人 + 活动名称 + 截止时间提醒
+- 附带报名表单链接
 - 附加简短填写指南（如 "每队只需队长填写一次"）
+- 如有活动海报，一并发送
+
+```
+lark-cli im +messages-send \
+  --chat-id <chat_id> \
+  --msg-type post \
+  --as bot \
+  内容...
+```
 
 ### 第五步：监听与统计
 - 实时监听新报名记录
@@ -102,6 +139,8 @@
 ## 使用的 CLI 命令
 - `lark-cli base +base-create` / `+table-create` / `+field-create` / `+form-create`
 - `lark-cli drive permission.public patch`（设置组织权限 — 创建后自动执行）
-- `lark-cli im +message-send`
+- `lark-cli im +chat-search`（搜索目标群）
+- `lark-cli im chat.members get`（检查 bot 是否在群中）
+- `lark-cli im +messages-send`（发送报名通知 + 海报）
 - `lark-cli base +record-list`
 - `lark-cli cron`（定时检查截止）
