@@ -94,7 +94,11 @@
    lark-cli base +form-create --base-token <token> --table-id <table_id> --name "活动报名表"
    ```
 2. 表单描述中注明截止时间和活动要点
-3. 生成表单分享链接
+3. **生成表单问卷链接（不是表格链接！）**：
+   ```
+   https://{tenant}.feishu.cn/base/{base_token}/form/{form_id}
+   ```
+   ⚠️ 必须用 `/form/{form_id}` 路由，不能用 `?table=` 参数。前者是问卷式独立页面，后者是表格视图。
 
 ### 第三步-2：设置实时报名通知（自动化工作流）
 
