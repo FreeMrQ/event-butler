@@ -88,17 +88,26 @@
    - 此设置确保组织内所有人可通过链接访问报名表单
    - `share_entity: "same_tenant"` 为飞书多维表格默认值，通常无需修改
 
-### 第三步：生成报名表单
+### 第三步：生成报名表单并发布
+
 1. 为报名表创建表单
    ```
    lark-cli base +form-create --base-token <token> --table-id <table_id> --name "活动报名表"
    ```
 2. 表单描述中注明截止时间和活动要点
-3. **生成表单问卷链接（不是表格链接！）**：
+
+3. **引导用户手动发布表单（API 暂不支持自动发布）：**
    ```
-   https://{tenant}.feishu.cn/base/{base_token}/form/{form_id}
+   📝 报名表单已创建。请手动发布获取分享链接：
+
+   1. 打开飞书 → 云文档 → 找到「活动报名表」
+   2. 点击右上角「发布」按钮
+   3. 复制分享链接（格式：https://xxx.feishu.cn/share/base/form/shrcn...）
+   4. 把链接发给我，我帮你发到群里
    ```
-   ⚠️ 必须用 `/form/{form_id}` 路由，不能用 `?table=` 参数。前者是问卷式独立页面，后者是表格视图。
+   ⚠️ **必须用发布后的 `share` 链接**（`/share/base/form/shrcn...`），不能用 `/base/{token}/form/{id}` 内部链接。后者未发布时他人无法填写。
+
+4. 收到用户提供的 share 链接后，继续下一步
 
 ### 第三步-2：设置实时报名通知（自动化工作流）
 
